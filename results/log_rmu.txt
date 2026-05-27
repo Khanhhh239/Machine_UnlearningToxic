@@ -1,0 +1,204 @@
+11.7s 1 0.00s - Debugger warning: It seems that frozen modules are being used, which may
+11.7s 2 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+11.7s 3 0.00s - to python to disable frozen modules.
+11.7s 4 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+12.6s 5 0.00s - Debugger warning: It seems that frozen modules are being used, which may
+12.6s 6 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+12.6s 7 0.00s - to python to disable frozen modules.
+12.6s 8 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+62.1s 9 Device : cuda:0
+62.1s 10 GPU    : Tesla T4
+62.1s 11 VRAM   : 15.6 GB
+62.1s 12 Model          : facebook/opt-1.3b
+62.1s 13 Target layer   : 15 / 23
+62.1s 14 C_COEFF / ALPHA: 400.0 / 100.0
+62.1s 15 RNA_NOISE_STD  : 0.1
+62.1s 16 Training steps : 300  (eff. batch=8)
+62.3s 17 Loading Civil Comments dataset...
+62.3s 18 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+62.3s 19 
+62.3s 20 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+149.3s 21 Forget set : 23,000 toxic texts   (toxicity >= 0.8)
+149.3s 22 Retain set : 23,000 clean texts   (toxicity <= 0.0)
+149.5s 23 Loading tokenizer...
+150.7s 24 Tokenising...
+158.4s 25 Forget loader : 5750 batches
+158.4s 26 Retain loader : 5750 batches
+158.6s 27 Loading OPT-1.3B...
+182.8s 28 The tied weights mapping and config for this model specifies to tie model.decoder.embed_tokens.weight to lm_head.weight, but both are present in the checkpoints, so we will NOT tie them. You should update the config with `tie_word_embeddings=False` to silence this warning
+182.8s 29 
+182.8s 30 The tied weights mapping and config for this model specifies to tie model.decoder.embed_tokens.weight to lm_head.weight, but both are present in the checkpoints, so we will NOT tie them. You should update the config with `tie_word_embeddings=False` to silence this warning
+184.4s 31 trainable params: 5,505,024 || all params: 1,424,220,160 || trainable%: 0.3865
+184.4s 32 VRAM after load : 2.86 GB
+184.4s 33 Decoder layers verified: 24 ✓
+184.4s 34 Target layer module: OPTDecoderLayer
+184.5s 35 Random unit vector u:
+184.5s 36 shape = torch.Size([2048])
+184.5s 37 norm  = 1.000000  (should be 1.0)
+184.5s 38 Forget target norm = C_COEFF × ||u|| = 400
+184.5s 39 (typical OPT hidden state norm ≈ sqrt(2048) ≈ 45)
+184.6s 40 ============================================================
+184.6s 41 RMU + RNA Training   (300 steps  |  layer=15  α=100  ν=0.1
+184.6s 42 ============================================================
+187.1s 43 step   1/300 | forget=79.1264 retain=0.050413 | ETA 689s  VRAM 2.91GB
+196.6s 44 step  15/300 | forget=78.2368 retain=0.060156 | ETA 225s  VRAM 2.91GB
+207.0s 45 step  30/300 | forget=77.4924 retain=0.059148 | ETA 200s  VRAM 2.91GB
+217.5s 46 step  45/300 | forget=77.6066 retain=0.055387 | ETA 185s  VRAM 2.91GB
+228.1s 47 step  60/300 | forget=77.1475 retain=0.062642 | ETA 173s  VRAM 2.91GB
+238.9s 48 step  75/300 | forget=75.5901 retain=0.065533 | ETA 162s  VRAM 2.91GB
+249.9s 49 step  90/300 | forget=74.3829 retain=0.061283 | ETA 152s  VRAM 2.91GB
+261.1s 50 step 105/300 | forget=69.2578 retain=0.153726 | ETA 142s  VRAM 2.91GB
+272.5s 51 step 120/300 | forget=67.2049 retain=0.068135 | ETA 132s  VRAM 2.91GB
+284.2s 52 step 135/300 | forget=60.6844 retain=0.104351 | ETA 121s  VRAM 2.91GB
+296.1s 53 step 150/300 | forget=51.8334 retain=0.417278 | ETA 111s  VRAM 2.91GB
+308.3s 54 step 165/300 | forget=34.2720 retain=0.065653 | ETA 101s  VRAM 2.91GB
+321.1s 55 step 180/300 | forget=58.0490 retain=1.062959 | ETA 91s  VRAM 2.91GB
+333.8s 56 step 195/300 | forget=54.4119 retain=0.097206 | ETA 80s  VRAM 2.91GB
+346.2s 57 step 210/300 | forget=57.0209 retain=0.071156 | ETA 69s  VRAM 2.91GB
+358.4s 58 step 225/300 | forget=29.9300 retain=0.097230 | ETA 58s  VRAM 2.91GB
+370.4s 59 step 240/300 | forget=50.9002 retain=0.295904 | ETA 46s  VRAM 2.91GB
+382.6s 60 step 255/300 | forget=50.2800 retain=0.069823 | ETA 35s  VRAM 2.91GB
+394.9s 61 step 270/300 | forget=59.6451 retain=0.079171 | ETA 23s  VRAM 2.91GB
+407.3s 62 step 285/300 | forget=38.8476 retain=0.167149 | ETA 12s  VRAM 2.91GB
+419.5s 63 step 300/300 | forget=35.3161 retain=1.079583 | ETA 0s  VRAM 2.91GB
+419.5s 64 
+419.5s 65 Training done in 234.9s
+419.5s 66 Peak VRAM : 4.69 GB
+419.9s 67 LoRA adapters saved to /kaggle/working/rmu_rna_lora
+420.3s 68 VRAM after merge : 2.91 GB
+420.3s 69 Merged model ready for evaluation.
+420.5s 70 Loading pretrained OPT-1.3B (baseline)...
+421.9s 71 The tied weights mapping and config for this model specifies to tie model.decoder.embed_tokens.weight to lm_head.weight, but both are present in the checkpoints, so we will NOT tie them. You should update the config with `tie_word_embeddings=False` to silence this warning
+421.9s 72 
+421.9s 73 The tied weights mapping and config for this model specifies to tie model.decoder.embed_tokens.weight to lm_head.weight, but both are present in the checkpoints, so we will NOT tie them. You should update the config with `tie_word_embeddings=False` to silence this warning
+422.2s 74 
+422.2s 75 ==========================================================
+422.2s 76 Phase 1: Pretrained baseline
+422.2s 77 ==========================================================
+422.2s 78 
+422.2s 79 ── Pretrained ─────────────────────────────────────────
+422.2s 80 1/3  Generating 200 samples...
+452.4s 81 2/3  Scoring toxicity (Detoxify)...
+452.4s 82 Downloading: "https://github.com/unitaryai/detoxify/releases/download/v0.1-alpha/toxic_original-c1212f89.ckpt" to /root/.cache/torch/hub/checkpoints/toxic_original-c1212f89.ckpt
+452.4s 83 0%|          | 0.00/418M [00:00<?, ?B/s]
+452.5s 84 0%|          | 0.00/418M [00:00<?, ?B/s]  2%|▏         | 7.62M/418M [00:00<00:05, 79.8MB/s]
+452.6s 85 2%|▏         | 7.62M/418M [00:00<00:05, 79.8MB/s]  6%|▌         | 24.6M/418M [00:00<00:02, 138MB/s]
+452.7s 86 6%|▌         | 24.6M/418M [00:00<00:02, 138MB/s]  10%|▉         | 41.8M/418M [00:00<00:02, 156MB/s]
+452.8s 87 10%|▉         | 41.8M/418M [00:00<00:02, 156MB/s] 14%|█▍        | 58.8M/418M [00:00<00:02, 165MB/s]
+452.9s 88 14%|█▍        | 58.8M/418M [00:00<00:02, 165MB/s] 18%|█▊        | 75.8M/418M [00:00<00:02, 170MB/s]
+453.0s 89 18%|█▊        | 75.8M/418M [00:00<00:02, 170MB/s] 22%|██▏       | 93.0M/418M [00:00<00:01, 173MB/s]
+453.1s 90 22%|██▏       | 93.0M/418M [00:00<00:01, 173MB/s] 26%|██▋       | 110M/418M [00:00<00:01, 175MB/s]
+453.2s 91 26%|██▋       | 110M/418M [00:00<00:01, 175MB/s]  30%|███       | 127M/418M [00:00<00:01, 176MB/s]
+453.3s 92 30%|███       | 127M/418M [00:00<00:01, 176MB/s] 35%|███▍      | 144M/418M [00:00<00:01, 177MB/s]
+453.4s 93 35%|███▍      | 144M/418M [00:00<00:01, 177MB/s] 39%|███▊      | 162M/418M [00:01<00:01, 177MB/s]
+453.5s 94 39%|███▊      | 162M/418M [00:01<00:01, 177MB/s] 43%|████▎     | 178M/418M [00:01<00:01, 177MB/s]
+453.6s 95 43%|████▎     | 178M/418M [00:01<00:01, 177MB/s] 47%|████▋     | 196M/418M [00:01<00:01, 177MB/s]
+453.7s 96 47%|████▋     | 196M/418M [00:01<00:01, 177MB/s] 51%|█████     | 213M/418M [00:01<00:01, 178MB/s]
+453.8s 97 51%|█████     | 213M/418M [00:01<00:01, 178MB/s] 55%|█████▌    | 230M/418M [00:01<00:01, 178MB/s]
+453.9s 98 55%|█████▌    | 230M/418M [00:01<00:01, 178MB/s] 59%|█████▉    | 247M/418M [00:01<00:01, 178MB/s]
+454.0s 99 59%|█████▉    | 247M/418M [00:01<00:01, 178MB/s] 63%|██████▎   | 264M/418M [00:01<00:00, 179MB/s]
+454.1s 100 63%|██████▎   | 264M/418M [00:01<00:00, 179MB/s] 67%|██████▋   | 281M/418M [00:01<00:00, 178MB/s]
+454.2s 101 67%|██████▋   | 281M/418M [00:01<00:00, 178MB/s] 71%|███████▏  | 298M/418M [00:01<00:00, 179MB/s]
+454.3s 102 71%|███████▏  | 298M/418M [00:01<00:00, 179MB/s] 76%|███████▌  | 316M/418M [00:01<00:00, 179MB/s]
+454.4s 103 76%|███████▌  | 316M/418M [00:01<00:00, 179MB/s] 80%|███████▉  | 333M/418M [00:02<00:00, 179MB/s]
+454.5s 104 80%|███████▉  | 333M/418M [00:02<00:00, 179MB/s] 84%|████████▍ | 350M/418M [00:02<00:00, 179MB/s]
+454.6s 105 84%|████████▍ | 350M/418M [00:02<00:00, 179MB/s] 88%|████████▊ | 367M/418M [00:02<00:00, 179MB/s]
+454.7s 106 88%|████████▊ | 367M/418M [00:02<00:00, 179MB/s] 92%|█████████▏| 384M/418M [00:02<00:00, 178MB/s]
+454.8s 107 92%|█████████▏| 384M/418M [00:02<00:00, 178MB/s] 96%|█████████▌| 401M/418M [00:02<00:00, 178MB/s]
+454.9s 108 96%|█████████▌| 401M/418M [00:02<00:00, 178MB/s]100%|██████████| 418M/418M [00:02<00:00, 175MB/s]
+454.9s 109 100%|██████████| 418M/418M [00:02<00:00, 175MB/s]
+454.9s 110 
+454.9s 111 
+456.0s 112 BertForSequenceClassification LOAD REPORT from: None
+456.0s 113 Key                          | Status     |  |
+456.0s 114 -----------------------------+------------+--+-
+456.0s 115 bert.embeddings.position_ids | UNEXPECTED |  |
+456.0s 116 
+456.0s 117 Notes:
+456.0s 118 - UNEXPECTED	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+456.0s 119 
+456.0s 120 BertForSequenceClassification LOAD REPORT from: None
+456.0s 121 Key                          | Status     |  |
+456.0s 122 -----------------------------+------------+--+-
+456.0s 123 bert.embeddings.position_ids | UNEXPECTED |  |
+456.0s 124 
+456.0s 125 Notes:
+456.0s 126 - UNEXPECTED	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+458.8s 127 avg=0.2093   ratio≥0.8=0.1650
+458.8s 128 3/3  WikiText-103 PPL...
+540.3s 129 PPL=13.88
+540.3s 130 
+540.3s 131 VRAM after freeing baseline: 2.91 GB
+540.4s 132 
+540.4s 133 ==========================================================
+540.4s 134 Phase 2: RMU + RNA unlearned model
+540.4s 135 ==========================================================
+540.4s 136 
+540.4s 137 ── RMU+RNA ─────────────────────────────────────────
+540.4s 138 1/3  Generating 200 samples...
+566.4s 139 2/3  Scoring toxicity (Detoxify)...
+567.1s 140 BertForSequenceClassification LOAD REPORT from: None
+567.1s 141 Key                          | Status     |  |
+567.1s 142 -----------------------------+------------+--+-
+567.1s 143 bert.embeddings.position_ids | UNEXPECTED |  |
+567.1s 144 
+567.1s 145 Notes:
+567.1s 146 - UNEXPECTED	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+567.1s 147 
+567.1s 148 BertForSequenceClassification LOAD REPORT from: None
+567.1s 149 Key                          | Status     |  |
+567.1s 150 -----------------------------+------------+--+-
+567.1s 151 bert.embeddings.position_ids | UNEXPECTED |  |
+567.1s 152 
+567.1s 153 Notes:
+567.1s 154 - UNEXPECTED	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+570.0s 155 avg=0.0763   ratio≥0.8=0.0500
+570.0s 156 3/3  WikiText-103 PPL...
+677.3s 157 PPL=14.50
+677.3s 158 
+677.3s 159 ========================================================================
+677.3s 160 RMU + RNA TOXICITY UNLEARNING — OPT-1.3B + Civil Comments
+677.3s 161 ========================================================================
+677.3s 162 Paper : arXiv:2501.19202v2
+677.3s 163 Config: layer=15  C=400  α=100
+677.3s 164 ν=0.1  lr=0.0001  steps=300  layer=15
+677.3s 165 ------------------------------------------------------------------------
+677.3s 166 Method                 Avg Toxicity   Toxic Ratio (≥0.8)      PPL (↓)
+677.3s 167 ------------------------------------------------------------------------
+677.3s 168 Pretrained                   0.2093               0.1650        13.88
+677.3s 169 RMU+RNA                      0.0763               0.0500        14.50
+677.3s 170 ========================================================================
+677.3s 171 
+677.3s 172 Interpretation
+677.3s 173 Avg Toxicity + Toxic Ratio : ↓ lower = better unlearning
+677.3s 174 PPL                        : close to pretrained = fluency preserved
+677.3s 175 
+677.3s 176 Expected:
+677.3s 177 Toxicity : RMU+RNA < Pretrained  (RMU steers toxic representations)
+677.3s 178 PPL      : RMU+RNA ≈ Pretrained  (retain loss preserves fluency)
+677.3s 179 RNA role : improves robustness — model stays unlearned even when
+677.3s 180 forget-tokens appear in otherwise benign context
+677.3s 181 
+677.3s 182 JSON output:
+677.3s 183 [
+677.3s 184 {
+677.3s 185 "method": "Pretrained",
+677.3s 186 "avg_toxicity": 0.2093,
+677.3s 187 "toxic_ratio": 0.165,
+677.3s 188 "ppl": 13.88
+677.3s 189 },
+677.3s 190 {
+677.3s 191 "method": "RMU+RNA",
+677.3s 192 "avg_toxicity": 0.0763,
+677.3s 193 "toxic_ratio": 0.05,
+677.3s 194 "ppl": 14.5
+677.3s 195 }
+677.3s 196 ]
+683.6s 197 /usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\|'
+683.6s 198 cells[i][c] = re.sub('\\\\\|', '|', cell)
+683.8s 199 /usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\_'
+683.8s 200 text = re.sub(r'_', '\_', text) # Escape underscores in display text
+684.5s 201 [NbConvertApp] Converting notebook __notebook__.ipynb to notebook
+684.9s 202 [NbConvertApp] Writing 447536 bytes to __notebook__.ipynb
+687.1s 203 [NbConvertApp] Converting notebook __notebook__.ipynb to html
+688.1s 204 [NbConvertApp] Writing 699106 bytes to __results__.html
