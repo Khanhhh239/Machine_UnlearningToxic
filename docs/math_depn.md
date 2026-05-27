@@ -19,7 +19,7 @@ $$\text{FFN}(x) = W_2 \cdot \text{ReLU}(W_1 x + b_1) + b_2$$
 where:
 - $W_1 \in \mathbb{R}^{8192 \times 2048}$ (`fc1`) — projects from hidden dim to FFN dim
 - $W_2 \in \mathbb{R}^{2048 \times 8192}$ (`fc2`) — projects back
-- **Neuron $k$ at layer $l$** = the $k$-th unit of $h_l = \text{ReLU}(W_1 x + b_1)$, i.e., $h_l^k = \text{ReLU}((W_1)_{k,:} x + (b_1)_k)$
+- **Neuron $k$ at layer $l$** = the $k$-th unit of $h_l = \text{ReLU}(W_1 x + b_1)$, i.e., the scalar $h_l^k$ given by the formula in the block above
 
 Total neurons: $24 \times 8192 = \mathbf{196,608}$.
 
@@ -37,7 +37,7 @@ For $m=1$ (single-step approximation used in practice):
 
 $$\boxed{\text{Att}(w_l^k) \approx h_l^k \cdot \left(-\frac{\partial \mathcal{L}_{\text{NLL}}}{\partial h_l^k}\right)}$$
 
-where $h_l^k = \text{ReLU}((W_1)_{k,:} x + (b_1)_k) \geq 0$ is the neuron activation and $-\partial \mathcal{L}_{\text{NLL}} / \partial h_l^k$ is the negative gradient of the NLL loss with respect to that activation.
+where $h_l^k \geq 0$ is the ReLU neuron activation and the term $-\partial L_{\text{NLL}} / \partial h_l^k$ is the negative gradient of the NLL loss with respect to that activation.
 
 ### Interpretation of the score
 
