@@ -50,7 +50,7 @@ In other words: neuron $(l, k)$ is "toxic" if and only if it fires on toxic inpu
 
 The score is **clamped at 0**:
 
-$$\text{Att}(w_l^k) = \max\!\left(0, h_l^k \cdot \left(-\frac{\partial \mathcal{L}_{\text{NLL}}}{\partial h_l^k}\right)\right)$$
+$$\text{Att}(w_l^k) = \max\left(0,\; h_l^k \cdot \left(-\frac{\partial \mathcal{L}_{\text{NLL}}}{\partial h_l^k}\right)\right)$$
 
 This ensures we only count neurons that actively **promote** toxicity (not neurons that fire but happen to suppress toxic tokens).
 
@@ -89,7 +89,7 @@ This gives us, in a single backward pass:
 
 For each scoring sample, the score is averaged over batch and sequence dimensions:
 
-$$\hat{\text{Att}}(w_l^k) = \frac{1}{B \cdot T} \sum_{b=1}^{B} \sum_{t=1}^{T} \max\!\left(0, h_{l,b,t}^k \cdot (-\nabla_{h_{l,b,t}^k} \mathcal{L})\right)$$
+$$\hat{\text{Att}}(w_l^k) = \frac{1}{B \cdot T} \sum_{b=1}^{B} \sum_{t=1}^{T} \max\left(0,\; h_{l,b,t}^k \cdot (-\nabla_{h_{l,b,t}^k} \mathcal{L})\right)$$
 
 Accumulated over $N = 64$ scoring samples:
 
@@ -111,7 +111,7 @@ $$\begin{cases}
 
 After zeroing, for **any** input $x$:
 
-$$h_l^k = \text{ReLU}\!\underbrace{\left((W_1)_{k,:} x + (b_1)_k\right)}_{= 0} = 0$$
+$$h_l^k = \text{ReLU}\left(\underbrace{(W_1)_{k,:} x + (b_1)_k}_{= 0}\right) = 0$$
 
 $$\text{fc2 output contribution of neuron } k = (W_2)_{:,k} \cdot h_l^k = \mathbf{0}$$
 
@@ -202,3 +202,4 @@ OPT's KV-cache is incompatible with gradient computation. Setting `use_cache=Fal
 DEPN was designed for **memorised specific information** (e.g., "SSN: 123-45-6789"). Toxicity is a **distributional style property** — it is encoded across many neurons and layers, not concentrated in a small set. Zeroing 1000 neurons (0.51%) removes some toxic capacity but leaves the majority intact.
 
 For comparison, the original DEPN paper achieves near-complete memorisation removal with 200–500 neurons on BERT because the target is specific token sequences with high localisation.
+  

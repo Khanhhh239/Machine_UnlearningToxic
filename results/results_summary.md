@@ -56,7 +56,7 @@ NPO+RT achieves toxicity $\approx 0$, meaning generated completions are statisti
 
 ### 2.2 Toxic Ratio (Fraction with Detoxify Score ≥ 0.8)
 
-$$\text{Toxic Ratio} = \Pr_{g \sim p_\theta}[\text{Detoxify}(g) \geq 0.8]$$
+$$\text{Toxic Ratio} = \mathbb{P}_{g \sim p_\theta}\bigl[\text{Detoxify}(g) \geq 0.8\bigr]$$
 
 This is a **tail metric** — it measures how often the model produces unambiguously toxic outputs (score above the high-confidence threshold of 0.8).
 
@@ -71,9 +71,9 @@ NPO+RT and Ethos essentially **eliminate** the tail of high-confidence toxic out
 
 ### 2.3 Perplexity (WikiText-103)
 
-$$\text{PPL} = \exp\!\left(\frac{-1}{N}\sum_{i=1}^{N} \log p_\theta(w_i \mid w_{<i})\right)$$
+$$\text{PPL} = \exp\left(\frac{-1}{N}\sum_{i=1}^{N} \log p_\theta(w_i \mid w_{1:i-1})\right)$$
 
-evaluated using the standard **sliding window** method with window $= 1024$, stride $= 512$, and $\text{prev\_end}$ tracking so each token is evaluated exactly once.
+evaluated using the standard **sliding window** method with window $= 1024$, stride $= 512$, and `prev_end` tracking so each token is evaluated exactly once.
 
 PPL measures **language model quality** — whether the model can still generate coherent, fluent text after unlearning. Lower is better; a significantly higher PPL than the pretrained model indicates collateral damage to general capabilities.
 
@@ -95,12 +95,12 @@ $$\hat{\theta} = \arg\min_\theta \; \underbrace{\mathcal{L}_{\text{forget}}(\the
 
 Different methods make different choices of $\mathcal{L}_{\text{forget}}$, $\mathcal{L}_{\text{retain}}$, and the tolerance $\epsilon$:
 
-| Method | $\mathcal{L}_{\text{forget}}$ | $\mathcal{L}_{\text{retain}}$ | Trade-off mechanism |
-|--------|-------------------------------|-------------------------------|---------------------|
-| Ethos | $\|\boldsymbol{\tau}_{\text{toxic}}\|$ (implicit via subtraction) | $\|\boldsymbol{\tau}_{\text{aux}}\|$ (additive restoration) | Static arithmetic; $\lambda, \xi$ are fixed post-training |
-| NPO+RT | $-\frac{2}{\beta}\log\sigma(-\beta \log \frac{\pi_\theta}{\pi_{\text{ref}}})$ | $-\log \pi_\theta(\mathcal{D}_r)$ | Dynamic: retain CE bounds forgetting via $\gamma$ |
-| DEPN | Implicit (attribution-based selection) | Structural (no training at all) | Hard constraint: only 0.51% of weights modified |
-| RMU+RNA | $\|h^{(l)}_\theta(x_f) - c\mathbf{u}\|^2$ | $\|h^{(l)}_\theta(x_r) - h^{(l)}_{\text{ref}}(x_r)\|^2$ | Soft constraint: $\alpha$ balances both |
+| Method | Forget objective | Retain objective | Trade-off mechanism |
+|--------|-----------------|-----------------|---------------------|
+| Ethos | Subtract toxic task vector | Add clean task vector | Static arithmetic; coefficients fixed post-training |
+| NPO+RT | Log-ratio loss (DPO-style) | Cross-entropy on retain set | Dynamic: retain CE bounds forgetting via gamma |
+| DEPN | Attribution-based neuron pruning | None (training-free) | Hard constraint: only 0.51% of weights zeroed |
+| RMU+RNA | Hidden-state MSE toward random vector | Hidden-state MSE toward frozen reference | Soft constraint: alpha balances both terms |
 
 ### Pareto Frontier Visualisation
 
@@ -313,3 +313,4 @@ No other method (from this set) can match NPO+RT's combination of 99.6% TRR and 
 | Most interpretable | **DEPN** (exact neuron list) | — |
 | Best overall (harmonic TRR×FPR) | **NPO+RT** (96.7%) | Ethos (93.5%) |
 | **Recommended for production** | **NPO+RT** | **Ethos** |
+                                                                                                                                                                                                                              

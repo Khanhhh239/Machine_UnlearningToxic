@@ -74,7 +74,7 @@ RNA (arXiv:2501.19202) modifies the retain loss to add **Gaussian noise to the r
 
 $$\mathcal{L}_{\text{retain}}^{\text{RNA}} = \mathbb{E}_{x_r \sim \mathcal{D}_r} \frac{1}{|\mathcal{T}(x_r)|} \sum_{t \in \mathcal{T}(x_r)} \left\| h_\theta^{(l)}(x_r)_t - \left(h_{\text{ref}}^{(l)}(x_r)_t + \varepsilon_t\right) \right\|^2$$
 
-where $\varepsilon_t \sim \mathcal{N}(0, \nu^2 I)$, $\nu = \text{RNA\_NOISE\_STD} = 0.1$, independent for each token position.
+where $\varepsilon_t \sim \mathcal{N}(0, \nu^2 I)$, $\nu =$ `RNA_NOISE_STD` $= 0.1$, independent for each token position.
 
 ### Gradient analysis
 
@@ -84,7 +84,7 @@ $$\frac{\partial \mathcal{L}_{\text{retain}}^{\text{RNA}}}{\partial h_t} = \frac
 
 Taking the expectation over $\varepsilon_t \sim \mathcal{N}(0, \nu^2 I)$:
 
-$$\mathbb{E}_\varepsilon\!\left[\frac{\partial \mathcal{L}_{\text{retain}}^{\text{RNA}}}{\partial h_t}\right] = \frac{2}{n_{\text{real}} \cdot D}\left(h_t - h_{\text{ref},t}\right)$$
+$$\mathbb{E}_\varepsilon\left[\frac{\partial \mathcal{L}_{\text{retain}}^{\text{RNA}}}{\partial h_t}\right] = \frac{2}{n_{\text{real}} \cdot D}\left(h_t - h_{\text{ref},t}\right)$$
 
 This is identical to the gradient of the standard retain loss — so RNA does **not** change the optimal solution or the mean gradient direction.
 
@@ -92,7 +92,7 @@ This is identical to the gradient of the standard retain loss — so RNA does **
 
 RNA injects **stochastic gradient noise** with variance:
 
-$$\text{Var}\!\left[\frac{\partial \mathcal{L}_{\text{retain}}^{\text{RNA}}}{\partial h_t}\right] = \frac{4\nu^2}{(n_{\text{real}} \cdot D)^2}$$
+$$\text{Var}\left[\frac{\partial \mathcal{L}_{\text{retain}}^{\text{RNA}}}{\partial h_t}\right] = \frac{4\nu^2}{(n_{\text{real}} \cdot D)^2}$$
 
 This gradient noise acts as a regulariser: it prevents the model from becoming overly sensitive to specific patterns in $h_{\text{ref}}$ (which could be triggered by forget-tokens appearing in retain queries). The paper's theoretical framework formalises this as a **backdoor defence** — the retain target $h_{\text{ref}} + \varepsilon$ varies stochastically, training the model to produce representations that match a **neighbourhood** around $h_{\text{ref}}$ rather than the exact point $h_{\text{ref}}$.
 
@@ -204,3 +204,4 @@ The initial forget loss prediction:
 $$\mathcal{L}_{\text{forget}}^{(0)} = \frac{c^2}{D} = \frac{400^2}{2048} = \frac{160000}{2048} \approx 78.1$$
 
 Observed: **79.1264** — difference of 1.0, explained by the small $\|h\|^2 / D \approx 1.0$ contribution from the actual hidden state norm at layer 15. This confirms our implementation is mathematically correct.
+         

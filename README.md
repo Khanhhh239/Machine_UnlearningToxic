@@ -48,9 +48,9 @@ In practice, we measure success with three metrics:
 
 $$\text{Avg Toxicity} = \mathbb{E}_{x \sim p_{\hat{\theta}}(\cdot \mid \text{prompt})}[\text{Detoxify}(x)]$$
 
-$$\text{Toxic Ratio} = \Pr_{x \sim p_{\hat{\theta}}}[\text{Detoxify}(x) \geq 0.8]$$
+$$\text{Toxic Ratio} = \mathbb{P}_{x \sim p_{\hat{\theta}}}\bigl[\text{Detoxify}(x) \geq 0.8\bigr]$$
 
-$$\text{PPL} = \exp\!\left(-\frac{1}{N}\sum_{i=1}^{N} \log p_{\hat{\theta}}(w_i \mid w_{<i})\right) \quad \text{on WikiText-103}$$
+$$\text{PPL} = \exp\left(-\frac{1}{N}\sum_{i=1}^{N} \log p_{\hat{\theta}}(w_i \mid w_{1:i-1})\right) \quad \text{on WikiText-103}$$
 
 A good unlearner achieves **low toxicity** (effective forgetting) and **low PPL** (fluency preservation).
 
@@ -131,7 +131,7 @@ where $\tau = \theta_{\text{fine-tuned}} - \theta_{\text{base}}$ is the **task v
 
 **Core idea**: Adapt DPO (Direct Preference Optimization) to treat the forget set as **dispreferred completions**. Maximize the log-likelihood ratio of the reference model over the current model on forget data.
 
-$$\mathcal{L}_{\text{NPO}} = -\frac{2}{\beta} \mathbb{E}_{x_f \sim \mathcal{D}_f}\!\left[\log \sigma\!\left(-\beta \log \frac{\pi_\theta(x_f)}{\pi_{\text{ref}}(x_f)}\right)\right]$$
+$$\mathcal{L}_{\text{NPO}} = -\frac{2}{\beta} \mathbb{E}_{x_f \sim \mathcal{D}_f}\left[\log \sigma\left(-\beta \log \frac{\pi_\theta(x_f)}{\pi_{\text{ref}}(x_f)}\right)\right]$$
 
 **NPO+RT** adds a cross-entropy retain term:
 
@@ -161,7 +161,7 @@ $$\text{Att}(w_l^k) \approx \underbrace{\text{ReLU}(\text{fc1}(x))_k}_{\beta_l^k
 
 **Core idea**: Steer the hidden-state representations of forget samples toward a random, meaningless vector $\mathbf{u}$, while keeping retain representations close to the frozen reference. RNA adds Gaussian noise to the retain target to improve robustness.
 
-$$\mathcal{L}_{\text{RMU+RNA}} = \underbrace{\mathbb{E}_{x_f}\!\left[\|h_\theta^{(l)}(x_f) - c\mathbf{u}\|^2\right]}_{\text{forget}} + \alpha \underbrace{\mathbb{E}_{x_r}\!\left[\|h_\theta^{(l)}(x_r) - (h_{\text{ref}}^{(l)}(x_r) + \varepsilon)\|^2\right]}_{\text{retain, RNA-augmented}}$$
+$$\mathcal{L}_{\text{RMU+RNA}} = \underbrace{\mathbb{E}_{x_f}\left[\|h_\theta^{(l)}(x_f) - c\mathbf{u}\|^2\right]}_{\text{forget}} + \alpha \underbrace{\mathbb{E}_{x_r}\left[\|h_\theta^{(l)}(x_r) - (h_{\text{ref}}^{(l)}(x_r) + \varepsilon)\|^2\right]}_{\text{retain, RNA-augmented}}$$
 
 **Key property**: Operates at the representation level (hidden states), not output probabilities. More direct control over internal model states.
 
@@ -242,4 +242,4 @@ All notebooks are designed for **Kaggle free-tier** (Tesla T4 GPU, 16 GB VRAM, P
 4. **RMU**: Li et al., *"The WMDP Benchmark: Measuring and Reducing Malicious Use With Unlearning"*, arXiv:2403.03218
 5. **RNA**: Dang et al., *"Improving LLM Unlearning Robustness via Random Perturbations"*, arXiv:2501.19202
 6. **Civil Comments**: Borkan et al., *"Nuanced Metrics for Measuring Unintended Bias with Real Data for Text Classification"*, WWW 2019
-7. **OPT**: Zhang et al., *"OPT: Open Pre-trained Transformer Language Models"*, arXiv:2205.01068
+7. **OPT**: Zhang et al., *"OPT: Open Pre-trained Transformer Language Models"*, arXiv:2

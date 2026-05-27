@@ -12,7 +12,7 @@
 
 DPO (Rafailov et al., 2023) is an RLHF method that trains a model to prefer "chosen" completions over "rejected" ones without a separate reward model. The DPO loss is:
 
-$$\mathcal{L}_{\text{DPO}} = -\mathbb{E}\!\left[\log \sigma\!\left(\beta \log \frac{\pi_\theta(y_w \mid x)}{\pi_{\text{ref}}(y_w \mid x)} - \beta \log \frac{\pi_\theta(y_l \mid x)}{\pi_{\text{ref}}(y_l \mid x)}\right)\right]$$
+$$\mathcal{L}_{\text{DPO}} = -\mathbb{E}\left[\log \sigma\left(\beta \log \frac{\pi_\theta(y_w \mid x)}{\pi_{\text{ref}}(y_w \mid x)} - \beta \log \frac{\pi_\theta(y_l \mid x)}{\pi_{\text{ref}}(y_l \mid x)}\right)\right]$$
 
 where $y_w$ is the preferred (winning) completion and $y_l$ is the rejected (losing) one.
 
@@ -22,11 +22,11 @@ For machine unlearning, we want to **discourage** the model from generating forg
 
 NPO achieves this by treating $\mathcal{D}_f$ as the **rejected** completions and letting the "chosen" completion be implicitly defined by the reference model (the pre-trained $\pi_{\text{ref}}$). Setting $y_w = x_f$ (same as rejected, i.e., the reference just re-generates it) and $y_l = x_f$:
 
-$$\mathcal{L}_{\text{NPO}} = -\frac{2}{\beta} \mathbb{E}_{x_f \sim \mathcal{D}_f}\!\left[\log \sigma\!\left(-\beta \log \frac{\pi_\theta(x_f)}{\pi_{\text{ref}}(x_f)}\right)\right]$$
+$$\mathcal{L}_{\text{NPO}} = -\frac{2}{\beta} \mathbb{E}_{x_f \sim \mathcal{D}_f}\left[\log \sigma\left(-\beta \log \frac{\pi_\theta(x_f)}{\pi_{\text{ref}}(x_f)}\right)\right]$$
 
 Expanding the log-ratio:
 
-$$\log \frac{\pi_\theta(x_f)}{\pi_{\text{ref}}(x_f)} = \sum_{t=1}^{T} \log \frac{\pi_\theta(x_{f,t} \mid x_{f,<t})}{\pi_{\text{ref}}(x_{f,t} \mid x_{f,<t})}$$
+$$\log \frac{\pi_\theta(x_f)}{\pi_{\text{ref}}(x_f)} = \sum_{t=1}^{T} \log \frac{\pi_\theta(x_{f,t} \mid x_{f,1:t-1})}{\pi_{\text{ref}}(x_{f,t} \mid x_{f,1:t-1})}$$
 
 This is the **per-sequence log-probability ratio** — a single scalar measuring how much the current model $\pi_\theta$ has moved away from $\pi_{\text{ref}}$ on the forget sequence.
 
@@ -66,7 +66,7 @@ $$\mathcal{L}_{\text{NPO+RT}} = \mathcal{L}_{\text{NPO}} + \gamma \cdot \mathcal
 
 where:
 
-$$\mathcal{L}_{\text{CE}}(\mathcal{D}_r) = -\mathbb{E}_{x_r \sim \mathcal{D}_r}\!\left[\frac{1}{|x_r|}\sum_{t=1}^{|x_r|} \log \pi_\theta(x_{r,t} \mid x_{r,<t})\right]$$
+$$\mathcal{L}_{\text{CE}}(\mathcal{D}_r) = -\mathbb{E}_{x_r \sim \mathcal{D}_r}\left[\frac{1}{|x_r|}\sum_{t=1}^{|x_r|} \log \pi_\theta(x_{r,t} \mid x_{r,1:t-1})\right]$$
 
 The hyperparameter $\gamma$ controls the forget–retain trade-off. We use $\gamma = 1.0$ (paper's recommended value).
 
@@ -162,7 +162,7 @@ This is equivalent to **minimising** $\log \pi_\theta(x_f)$ subject to no constr
 
 In practice, the model learns to produce near-zero probabilities for ALL tokens (not just toxic ones), leading to:
 
-$$\text{PPL} = \exp\!\left(-\frac{1}{N}\sum_{i} \log p_\theta(w_i)\right) \approx \exp(28) \approx 10^{12}$$
+$$\text{PPL} = \exp\left(-\frac{1}{N}\sum_{i} \log p_\theta(w_i)\right) \approx \exp(28) \approx 10^{12}$$
 
 This confirms that **the forget and retain objectives are inextricably coupled in a language model**: you cannot forget a distribution without simultaneously affecting what the model assigns probability to elsewhere.
 
@@ -191,3 +191,4 @@ The NPO loss involves $\log \sigma(-\beta r)$. When $\beta r \gg 0$ (early train
 ### 6.4 Gradient clipping at 1.0
 
 The adaptive weight $2\sigma(\beta r)$ is bounded in $[0, 2]$, but the underlying $\partial \log \pi_\theta / \partial \theta$ can be large early in training. `clip_grad_norm_(params, 1.0)` prevents gradient explosion.
+   

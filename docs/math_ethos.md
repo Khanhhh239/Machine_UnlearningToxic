@@ -54,7 +54,7 @@ The task vector $\boldsymbol{\tau}_T$ therefore lives in a space of dimension $\
 
 Both adapters are trained with standard **cross-entropy language modelling loss**:
 
-$$\mathcal{L}_{\text{CE}}(\theta; \mathcal{D}) = -\frac{1}{|\mathcal{D}|} \sum_{(x, y) \in \mathcal{D}} \sum_{t=1}^{T} \log p_\theta(y_t \mid y_{<t}, x)$$
+$$\mathcal{L}_{\text{CE}}(\theta; \mathcal{D}) = -\frac{1}{|\mathcal{D}|} \sum_{(x, y) \in \mathcal{D}} \sum_{t=1}^{T} \log p_\theta(y_t \mid y_{1:t-1}, x)$$
 
 - $\theta_{\text{toxic}}$: trained on $\mathcal{D}_f$ (toxic texts) → learns to generate toxic content
 - $\theta_{\text{aux}}$: trained on $\mathcal{D}_r$ (clean texts) → learns clean generation patterns
@@ -93,11 +93,19 @@ This means **43.52%** of the total singular-value mass was retained, eliminating
 
 The notebook evaluates three configurations:
 
-| Variant | Formula | SVD on $\boldsymbol{\tau}$ | Result |
-|---------|---------|--------------------------|--------|
-| **Negation** | $\theta_{\text{base}} - \xi \cdot \boldsymbol{\tau}_{\text{toxic}}$ | No | avg_tox=0.053 |
-| **Ethos-uf** | $\theta_{\text{base}} + \lambda \boldsymbol{\tau}_{\text{aux}} - \xi \boldsymbol{\tau}_{\text{toxic}}$ | No | avg_tox=0.013 |
-| **Ethos** | $\theta_{\text{base}} + \lambda \boldsymbol{\tau}_{\text{aux}} - \xi \boldsymbol{\tau}_{\text{toxic,filtered}}$ | Yes | avg_tox=0.023 |
+| Variant | SVD on tau | avg\_tox |
+|---------|-----------|---------|
+| **Negation** | No | 0.053 |
+| **Ethos-uf** | No | 0.013 |
+| **Ethos** | Yes | 0.023 |
+
+**Formulas:**
+
+$$\text{Negation:} \quad \theta_{\text{unlearned}} = \theta_{\text{base}} - \xi \cdot \boldsymbol{\tau}_{\text{toxic}}$$
+
+$$\text{Ethos-uf:} \quad \theta_{\text{unlearned}} = \theta_{\text{base}} + \lambda \boldsymbol{\tau}_{\text{aux}} - \xi \boldsymbol{\tau}_{\text{toxic}}$$
+
+$$\text{Ethos:} \quad \theta_{\text{unlearned}} = \theta_{\text{base}} + \lambda \boldsymbol{\tau}_{\text{aux}} - \xi \boldsymbol{\tau}_{\text{toxic,filtered}}$$
 
 **Observations**:
 
@@ -160,4 +168,4 @@ Mathematical interpretation: let the toxic weight space be decomposed as:
 
 $$\boldsymbol{\tau}_{\text{toxic}} = \boldsymbol{\tau}_{\text{toxic,signal}} + \boldsymbol{\tau}_{\text{noise}}$$
 
-SVD filtering keeps $\boldsymbol{\tau}_{\text{toxic,signal}}$ (high singular values, consistent across toxic samples) and discards $\boldsymbol{\tau}_{\text{noise}}$ (low singular values, random). The threshold (43.52% retention) was chosen to maximize toxicity reduction while minimising PPL degradation.
+SVD filtering keeps $\boldsymbol{\tau}_{\text{toxic,signal}}$ (high singular values, consistent across toxic samples) and discards $\boldsymbol{\tau}_{\text{noise}}$ (low singular values, random). The thresh
