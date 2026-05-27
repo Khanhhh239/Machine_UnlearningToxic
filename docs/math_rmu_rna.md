@@ -204,4 +204,3 @@ The initial forget loss prediction:
 $$\mathcal{L}_{\text{forget}}^{(0)} = \frac{c^2}{D} = \frac{400^2}{2048} = \frac{160000}{2048} \approx 78.1$$
 
 Observed: **79.1264** — difference of 1.0, explained by the small $\|h\|^2 / D \approx 1.0$ contribution from the actual hidden state norm at layer 15. This confirms our implementation is mathematically correct.
-         

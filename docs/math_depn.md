@@ -202,4 +202,3 @@ OPT's KV-cache is incompatible with gradient computation. Setting `use_cache=Fal
 DEPN was designed for **memorised specific information** (e.g., "SSN: 123-45-6789"). Toxicity is a **distributional style property** — it is encoded across many neurons and layers, not concentrated in a small set. Zeroing 1000 neurons (0.51%) removes some toxic capacity but leaves the majority intact.
 
 For comparison, the original DEPN paper achieves near-complete memorisation removal with 200–500 neurons on BERT because the target is specific token sequences with high localisation.
-  

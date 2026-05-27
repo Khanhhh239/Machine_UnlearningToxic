@@ -313,4 +313,3 @@ No other method (from this set) can match NPO+RT's combination of 99.6% TRR and 
 | Most interpretable | **DEPN** (exact neuron list) | — |
 | Best overall (harmonic TRR×FPR) | **NPO+RT** (96.7%) | Ethos (93.5%) |
 | **Recommended for production** | **NPO+RT** | **Ethos** |
-                                                                                                                                                                                                                              

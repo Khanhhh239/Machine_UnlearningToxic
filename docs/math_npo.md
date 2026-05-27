@@ -191,4 +191,3 @@ The NPO loss involves $\log \sigma(-\beta r)$. When $\beta r \gg 0$ (early train
 ### 6.4 Gradient clipping at 1.0
 
 The adaptive weight $2\sigma(\beta r)$ is bounded in $[0, 2]$, but the underlying $\partial \log \pi_\theta / \partial \theta$ can be large early in training. `clip_grad_norm_(params, 1.0)` prevents gradient explosion.
-   
