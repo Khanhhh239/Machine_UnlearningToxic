@@ -128,9 +128,9 @@ From `log_npo.txt`, the NPO+RT training loss shows:
 
 **Key observations**:
 
-1. **$\mathcal{L}_{\text{NPO}}$ decreases monotonically**: from 11.73 to 1.03 — the model is successfully "un-learning" the toxic sequences.
+1. **NPO loss decreases monotonically**: from 11.73 to 1.03 — the model is successfully "un-learning" the toxic sequences.
 
-2. **$\mathcal{L}_{\text{RT}}$ stabilises around 4.0**: the retain loss quickly reaches a steady state, meaning the model is not degrading its clean-data generation. This confirms $\gamma=1.0$ provides adequate regularisation.
+2. **Retain loss stabilises around 4.0**: the retain loss quickly reaches a steady state, meaning the model is not degrading its clean-data generation. This confirms $\gamma=1.0$ provides adequate regularisation.
 
 3. **High initial NPO loss** (11.73) indicates the pretrained model assigns high probability to toxic sequences — confirming Civil Comments toxicity IS encoded in the model weights.
 
@@ -138,7 +138,11 @@ From `log_npo.txt`, the NPO+RT training loss shows:
 
 ### Loss ratio analysis
 
-At step 500: $\mathcal{L}_{\text{NPO}} / (\gamma \cdot \mathcal{L}_{\text{RT}}) = 1.03 / 3.96 \approx 0.26$. The retain term dominates in the final stages, which is desirable — it prevents over-forgetting by anchoring the model to the retain distribution.
+At step 500:
+
+$$\mathcal{L}_{\text{NPO}} / (\gamma \cdot \mathcal{L}_{\text{RT}}) = 1.03 / 3.96 \approx 0.26$$
+
+The retain term dominates in the final stages, which is desirable — it prevents over-forgetting by anchoring the model to the retain distribution.
 
 ---
 

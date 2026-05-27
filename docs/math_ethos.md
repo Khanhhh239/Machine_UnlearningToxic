@@ -168,4 +168,8 @@ Mathematical interpretation: let the toxic weight space be decomposed as:
 
 $$\boldsymbol{\tau}_{\text{toxic}} = \boldsymbol{\tau}_{\text{toxic,signal}} + \boldsymbol{\tau}_{\text{noise}}$$
 
-SVD filtering keeps $\boldsymbol{\tau}_{\text{toxic,signal}}$ (high singular values, consistent across toxic samples) and discards $\boldsymbol{\tau}_{\text{noise}}$ (low singular values, random). The thresh
+SVD filtering keeps the **signal component** (high singular values, consistent across toxic samples) and discards the **noise component** (low singular values, random):
+
+$$\boldsymbol{\tau}_{\text{toxic,signal}} \text{ (kept)}, \qquad \boldsymbol{\tau}_{\text{noise}} \text{ (discarded)}$$
+
+The threshold is set by `TOP_K_RATIO = 0.5`, retaining the top 50% of singular-value energy and removing the rest.

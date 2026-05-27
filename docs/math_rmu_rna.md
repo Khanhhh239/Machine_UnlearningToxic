@@ -78,7 +78,7 @@ where $\varepsilon_t \sim \mathcal{N}(0, \nu^2 I)$, $\nu =$ `RNA_NOISE_STD` $= 0
 
 ### Gradient analysis
 
-The gradient of $\mathcal{L}_{\text{retain}}^{\text{RNA}}$ with respect to $h_\theta^{(l)}(x_r)_t$ is:
+The gradient of the RNA retain loss with respect to $h_t$ is:
 
 $$\frac{\partial \mathcal{L}_{\text{retain}}^{\text{RNA}}}{\partial h_t} = \frac{2}{n_{\text{real}} \cdot D} \left(h_t - h_{\text{ref},t} - \varepsilon_t\right)$$
 

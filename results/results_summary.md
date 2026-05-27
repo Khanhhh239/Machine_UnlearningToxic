@@ -129,17 +129,21 @@ FPR (fluency)
 
 NPO+RT achieves near-perfect forgetting ($\text{Tox} = 0.0007$) because its loss function has a **theoretically motivated gradient**: the log-ratio $\log(\pi_\theta / \pi_{\text{ref}})$ directly measures the model's progress toward forgetting $\mathcal{D}_f$. As the ratio approaches zero ($\pi_\theta(x_f) \to 0$), the adaptive weight $2\sigma(\beta r) \to 0$, providing **automatic early stopping** — the gradient decays as the task is completed.
 
-The key proof: at convergence, $\nabla_\theta \mathcal{L}_{\text{NPO}} = 0$ implies $\sigma(\beta r) = 0$, which means $r = \log(\pi_\theta / \pi_{\text{ref}}) \to -\infty$, i.e., $\pi_\theta(x_f) \to 0$. This is the **globally optimal solution** — complete forgetting.
+The key proof: at convergence
+
+$$\nabla_\theta \mathcal{L}_{\text{NPO}} = 0 \implies \sigma(\beta r) = 0 \implies r = \log(\pi_\theta / \pi_{\text{ref}}) \to -\infty \implies \pi_\theta(x_f) \to 0$$
+
+This is the **globally optimal solution** — complete forgetting.
 
 The retain term $\gamma \mathcal{L}_{\text{CE}}(\mathcal{D}_r)$ prevents this from corrupting fluency. The observed PPL of 14.78 (vs 13.88 pretrained) confirms only minimal collateral damage.
 
 **From the training loss curve** (NPO+RT, 500 steps):
-- $\mathcal{L}_{\text{NPO}}$ converges from 11.73 → 1.03: **91.2% reduction**
-- $\mathcal{L}_{\text{RT}}$ stabilises at ~4.0: the retain objective is consistently satisfied
+- NPO loss converges from 11.73 → 1.03: **91.2% reduction**
+- Retain loss stabilises at ~4.0: the retain objective is consistently satisfied
 
 ### 4.2 Why Ethos achieves excellent fluency preservation
 
-Ethos PPL actually **improves** slightly (16.751 → 16.338, a $-2.5\%$ change). This is because the **auxiliary task vector** $\lambda \boldsymbol{\tau}_{\text{aux}}$ adds a "clean generation boost" — fine-tuning on clean text slightly specialises the model for coherent, non-toxic language, which benefits PPL on WikiText-103.
+Ethos PPL actually **improves** slightly (16.751 → 16.338, a $-2.5\%$ change). This is because the **auxiliary task vector** (the clean-data LoRA delta, scaled by λ) adds a "clean generation boost" — fine-tuning on clean text slightly specialises the model for coherent, non-toxic language, which benefits PPL on WikiText-103.
 
 Mathematically, Ethos minimises:
 
@@ -199,7 +203,11 @@ The NPO (no retain) model is **worse than random by 7 orders of magnitude**. Thi
 
 **Mathematical explanation**:
 
-The NPO loss $\mathcal{L}_{\text{NPO}} = -\frac{2}{\beta} \mathbb{E}[\log \sigma(-\beta r)]$ with $r = \log(\pi_\theta / \pi_{\text{ref}})$ is minimised by pushing $r \to -\infty$, i.e., $\pi_\theta(x_f) \to 0$.
+The NPO loss
+
+$$\mathcal{L}_{\text{NPO}} = -\frac{2}{\beta} \mathbb{E}[\log \sigma(-\beta r)], \quad r = \log(\pi_\theta / \pi_{\text{ref}})$$
+
+is minimised by pushing $r \to -\infty$, i.e., $\pi_\theta(x_f) \to 0$.
 
 But the model cannot set $\pi_\theta(x_f) = 0$ for a specific distribution while maintaining $\sum_x \pi_\theta(x) = 1$ over all sequences. To make $\pi_\theta(x_f)$ small, the model must spread probability mass to other sequences. Without a retain constraint, the model finds a degenerate solution:
 
