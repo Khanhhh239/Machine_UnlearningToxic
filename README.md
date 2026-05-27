@@ -173,24 +173,22 @@ $$\mathcal{L}_{\text{RMU+RNA}} = \underbrace{\mathbb{E}_{x_f}\left[\|h_\theta^{(
 MachineUnlearningToxic/
 │
 ├── README.md                    ← This file
-├── notebooks/
-│   ├── ethos-algo.ipynb             ← Ethos Kaggle notebook
-│   ├── npo-algo.ipynb               ← NPO/NPO+RT Kaggle notebook
-│   ├── depn-algo.ipynb              ← DEPN Kaggle notebook
-│   └── rmu-algo.ipynb               ← RMU+RNA Kaggle notebook
-│
+├── ethos-algo.ipynb             ← Ethos Kaggle notebook
+├── npo-algo.ipynb               ← NPO/NPO+RT Kaggle notebook
+├── depn-algo.ipynb              ← DEPN Kaggle notebook
+├── rmu-algo.ipynb               ← RMU+RNA Kaggle notebook
 │
 ├── docs/
 │   ├── math_ethos.md            ← Mathematical deep-dive: Ethos
 │   ├── math_npo.md              ← Mathematical deep-dive: NPO
 │   ├── math_depn.md             ← Mathematical deep-dive: DEPN
-│   └── math_rmu_rna.md         ← Mathematical deep-dive: RMU+RNA
-│   
-├── results/
-│   ├── log_ethos.txt                ← Full execution log — Ethos
-│   ├── log_npo.txt                ← Full execution log — Ethos
-│   ├── log_depn.txt                 ← Full execution log — DEPN
-│   └── log_rmu.txt                  ← Full execution log — RMU+RNA
+│   └── math_rmu_rna.md          ← Mathematical deep-dive: RMU+RNA
+│
+└── results/
+    ├── log_ethos.txt            ← Full execution log — Ethos
+    ├── log_npo.txt              ← Full execution log — NPO
+    ├── log_depn.txt             ← Full execution log — DEPN
+    ├── log_rmu.txt              ← Full execution log — RMU+RNA
     └── results_summary.md       ← Full results, trade-off analysis, recommendations
 ```
 
@@ -242,4 +240,5 @@ All notebooks are designed for **Kaggle free-tier** (Tesla T4 GPU, 16 GB VRAM, P
 4. **RMU**: Li et al., *"The WMDP Benchmark: Measuring and Reducing Malicious Use With Unlearning"*, arXiv:2403.03218
 5. **RNA**: Dang et al., *"Improving LLM Unlearning Robustness via Random Perturbations"*, arXiv:2501.19202
 6. **Civil Comments**: Borkan et al., *"Nuanced Metrics for Measuring Unintended Bias with Real Data for Text Classification"*, WWW 2019
-7. **OPT**: Zhang et al., *"OPT: Open Pre-trained Transformer Language Models"*, arXiv:2
+7. **OPT**: Zhang et al., *"OPT: Open Pre-trained Transformer Language Models"*, arXiv:2205.01068
+                                                                 
